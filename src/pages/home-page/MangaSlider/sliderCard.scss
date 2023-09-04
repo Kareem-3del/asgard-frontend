@@ -1,0 +1,59 @@
+.effectParticles{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 1;
+}
+.sliderCard {
+  display: flex;
+  height: 40em;
+
+  &--story {
+    overflow: hidden;
+    display: -webkit-box;
+    margin-top: 1em;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    direction: rtl;
+  }
+
+  &--body {
+    height: 20em;
+    display: flex;
+    flex-direction: row;
+  }
+
+  &--title{
+    color: #fff;
+  }
+  &--image {
+    user-select: none;
+    user-focus: none;
+    height: 22em;
+    flex: none;
+    width: 15em;
+
+    img {
+      top: -1.5em;
+      position: relative;
+      object-position: center;
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+      border-radius: 8px;
+    }
+  }
+
+  &--actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 1em;
+    min-width: 10em;
+  }
+}

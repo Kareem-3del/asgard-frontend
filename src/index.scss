@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Kufam:ital@1&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
+
+root{
+  --md-background: #191a1c;
+  --md-background-translucent: rgba(25,26,28,0.6);
+  --md-background-transparent: rgba(25,26,28,0);
+  --md-secondary: #aeaeae;
+  --md-accent-lighten2: #4f4f4f;
+  --md-accent-lighten: #3d3d3d;
+  --md-accent: #2c2c2c;
+  --md-accent-darken: #202020;
+  --md-accent-darken2: #1d1d1d;
+  --md-accent2: #272b30;
+  --md-accent3: #4b98f1;
+  --md-danger: #ff4040;
+  --md-danger-shade: #e63939;
+  --md-danger-bright: #ffd9d9;
+  --md-danger-lessBright: #ffadad;
+  --md-danger-dark: #bd2f2f;
+  --md-status-red: #ff4040;
+  --md-status-green: #04d000;
+  --md-status-yellow: #f79421;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body{
+  font-family: "Khand", "Tajawal", cursive;
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 60px;
+}
+
+.mask-star-2{
+  -webkit-mask-image: url(./assets/star.svg);
+  mask-image: url(./assets/star.svg);
+}
+
+::-webkit-scrollbar {
+  width: 2px ;
+  border-radius: 5px;
+}
+
+
+::-webkit-scrollbar-track {
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  --tw-text-opacity: 1;
+  border-radius: 3px;
+  background-color: hsl(var(--p) / var(--tw-text-opacity));
+}
+
+@layer utilities {
+  @variants responsive {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+  }
+}
