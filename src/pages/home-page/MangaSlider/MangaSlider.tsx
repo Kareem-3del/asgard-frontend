@@ -59,7 +59,7 @@ export default function MangaSlider() {
                     className="mySwiper h-full z-50">
 
                     {
-                        mangaList.map((manga) => {
+                        mangaList?.map((manga) => {
                             return <SwiperSlide key={`slider_${manga.id}`}>
                                 <SliderCard manga={manga}/>
                                     </SwiperSlide>

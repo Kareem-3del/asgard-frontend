@@ -48,7 +48,7 @@ export default function HomePage() {
                 <div className="flex justify-center items-center flex-wrap mt-5 container">
 
                     {
-                        manga.map((manga, index) => {
+                        manga?.map((manga, index) => {
                             return <MangaCardHome key={index} manga={manga}/>
                         })
 
