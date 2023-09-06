@@ -2,12 +2,15 @@ import React, {useEffect} from "react";
 import {FaCoins, FaDiscord, FaFacebook, FaTwitter} from "react-icons/fa";
 import {useAppSelector} from "../../hooks/redux";
 import soloLeveling from "../../assets/images/solo-leveling_.png";
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
+
 export default function Footer() {
+
     function setTheme(theme: string) {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
     }
+
 
     const {user} = useAppSelector(((state) => state.auth));
 
@@ -21,9 +24,11 @@ export default function Footer() {
             <div className="drawer-side">
                 <label htmlFor="sidebar" className="drawer-overlay"></label>
 
-                <div className="menu p-4 w-80 bg-base-100 text-base-content flex flex-col h-full overflow-hidden flex-nowrap">
+                <div
+                    className="menu p-4 w-80 bg-base-100 text-base-content flex flex-col h-full overflow-hidden flex-nowrap">
                     <h1 className="text-2xl justify-center items-center flex w-full mt-3 w-full font-bold flex-col">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 408.56 221.72" className="fill-base-content h-24">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 408.56 221.72"
+                             className="fill-base-content h-24">
                             <g id="Layer_2" data-name="Layer 2">
                                 <g id="Layer_1-2" data-name="Layer 1">
                                     <g id="Layer_2-2" data-name="Layer 2">
@@ -106,14 +111,14 @@ export default function Footer() {
                         </svg>
                         <hr className="w-full w-[193px] h-1 border-none bg-base-content rounded-full mt-4"/>
                     </h1>
-                    {user && <div className="bg-base-300 mb-auto  rounded-lg mt-5 flex items-center p-4">
+                    {user && <div className="bg-base-300 mb-auto   rounded-lg mt-10 flex items-center p-4">
                         <div className="avatar">
-                            <div className="w-16 rounded-lg">
-                                <img src={user.cover_url || soloLeveling} alt="USER"/>
+                            <div className="w-20 rounded-lg">
+                                <img src={ soloLeveling} alt="USER"/>
                             </div>
                         </div>
-                        <div className="w-full px-3">
-                            <h1 className="text-2xl font-bold uppercase">{user.username}#{user.id}</h1>
+                        <div className="w-full px-3 ml-3">
+                            <h1 className="text-xl font-bold uppercase">{user.username}#{user.id}</h1>
                             <div className="space-x-2 flex">
 
                                 <label className="btn btn-sm  text-lg rounded-lg space-x-3 min-w-[5.5rem]">
@@ -130,24 +135,21 @@ export default function Footer() {
                     </div>}
 
 
-
-                    {!user &&  <div className="h-full flex mb-auto w-full flex flex-col   space-y-3 mb-auto">
-                        <button className="btn rounded-lg  btn-primary mt-8">
+                    {!user && <div className="h-full flex mb-auto w-full flex flex-col   space-y-3 mb-auto">
+                        <Link to="/auth/login" className="btn rounded-lg  btn-primary mt-8">
                             تسجيل الدخول
-                        </button>
-                        <button className="btn rounded-lg btn-primary ">
+                        </Link>
+                        <Link to="/auth/register" className="btn rounded-lg btn-primary ">
                             انشاء حساب
-                        </button>
+                        </Link>
 
                     </div>}
 
 
-
-
-                    <ul className="p-2 w-full bg-base-300 rounded-lg flex justify-center space-x-3 items-center text-3xl">
-                        <span><FaFacebook/></span>
-                        <span><FaTwitter/></span>
-                        <span>  <FaDiscord/></span>
+                    <ul className="p-2 w-full   rounded-lg flex justify-center space-x-3 items-center text-3xl">
+                        <span className="btn btn-xs text-2xl w-12 h-12"><FaFacebook/></span>
+                        <span className="btn btn-xs text-2xl  w-12 h-12"><FaTwitter/></span>
+                        <span className="btn btn-xs text-2xl  w-12 h-12">  <FaDiscord/></span>
                         <span></span>
                     </ul>
 
