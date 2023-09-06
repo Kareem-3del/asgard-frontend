@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^35.4.0",
@@ -22,12 +23,14 @@
     "@types/react-email-editor": "^1.5.1",
     "@types/react-transition-group": "^4.4.5",
     "axios": "^1.2.1",
+    "dayjs": "^1.11.9",
     "disqus-react": "^1.1.5",
     "draft-js": "^0.11.7",
     "flowbite": "^1.5.5",
     "flowbite-react": "^0.3.7",
     "formik": "^2.2.9",
     "framer-motion": "^7.10.3",
+    "gh-pages": "^6.0.0",
     "install": "^0.13.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.39",

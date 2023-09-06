@@ -12,27 +12,64 @@ import mangaService from "../../../services/manga.service"
 import {IException} from "../../../interfaces/exception.interface";
 import {AxiosResponse} from "axios";
 import useToaster from "../../../hooks/toast/useToaster.hook";
+import {Rating} from "../../../components/rating/rating.component";
 const MangaMainInfoComponent = ({manga , onCommentsBtnClick}: { manga: IManga , onCommentsBtnClick : ()=>void }) => {
-    const [isFollowed, setIsFollowed] = React.useState(false);
 
     const toaster = useToaster();
     const {user} = useAuth();
+    const [isFavorite, setIisFavorite] = React.useState(
+        manga.users_favorites.some((item) => {
+            return item.id === user?.id;
+        }) || false
+    );
 
-    function followManga() {
-        mangaService.followMangaAPI(manga.id).then((res:AxiosResponse<IException>) => {
-            setIsFollowed(!isFollowed);
+    function addToFavorites() {
+        mangaService.addMangaToFavoriteAPI(manga.id).then((response: AxiosResponse) => {
+            setIisFavorite(true);
             toaster.createToast({
-                message : res.data.message as string,
-                type : "info"
+                message: response.data.message || "تمت الاضافة بنجاح",
+                type: "success"
+            })
+
+        }).catch((error: AxiosResponse<IException>) => {
+            toaster.createToast({
+                message: error?.data.message as string || "حدث خطأ ما",
+                type: "error"
             })
         })
     }
-    useEffect(() => {
-        if(user?.following){
-            const isFollowed = user.following.find((item) => item.id === manga.id);
-            setIsFollowed(!!isFollowed);
+
+    function removeFromFavorites() {
+        mangaService.removeMangaFromFavoriteAPI(manga.id).then((response: AxiosResponse) => {
+            setIisFavorite(false);
+            toaster.createToast({
+                message: response.data.message || "تم حذف العمل من المفضلة بنجاح",
+                type: "info"
+            })
+
+        }).catch((error: AxiosResponse<IException>) => {
+            toaster.createToast({
+                message: error?.data.message as string || "حدث خطأ ما",
+                type: "error"
+            })
+        })
+    }
+
+    function handleFavoriteBtnClick() {
+        if (isFavorite) {
+            removeFromFavorites();
+        } else {
+            addToFavorites();
         }
-    },[])
+    }
+    useEffect(() => {
+        manga.users_favorites.forEach((item) => {
+            console.log("COMPARE----",item.id, user?.id)
+            if (item.id === user?.id) {
+                setIisFavorite(true);
+            }
+        })
+    },[manga,user])
 
 
     const [showComments, setShowComments] = React.useState(false);
@@ -84,18 +121,14 @@ const MangaMainInfoComponent = ({manga , onCommentsBtnClick}: { manga: IManga , 
                         }
                     </div>
                     <div className="flex  items-center max-sm:mx-auto ">
-                        <div className="rating bg-base-100 px-8 py-3 sm:rating-md   text-xl  rounded-lg mr-2">
-                            <input type="radio" name="rating-asd" className="mask mask-star-2 bg-orange-400"/>
-                            <input type="radio" name="rating-asd" className="mask mask-star-2 bg-orange-400"/>
-                            <input type="radio" name="rating-asd" className="mask mask-star-2 bg-orange-400" defaultChecked={true}/>
-                            <input type="radio" name="rating-asd" className="mask mask-star-2 bg-orange-400"/>
-                            <input type="radio" name="rating-asd" className="mask mask-star-2 bg-orange-400"/>
-                        </div>
+
+                       <Rating className="bg-base-100 px-8 py-3 sm:rating-md text-xl rounded-lg mr-2" show_user_rate={true}  disabled={false} manga={manga} />
+
                         <div
                             className="h-12  bg-base-100 justify-center items-center  flex w-12 max-sm:h-12 max-sm:w-16 max-sm:text-4xl  text-4xl rounded-sm">
 
                             <div className="w-5 h-5 rounded-full" style={{
-                                backgroundColor: getStatusColor(manga.status)
+                                backgroundColor: getStatusColor(manga?.status)
                             }}></div>
                         </div>
                     </div>
@@ -103,7 +136,7 @@ const MangaMainInfoComponent = ({manga , onCommentsBtnClick}: { manga: IManga , 
 
 
                         <label className=" btn btn-sm btn-primary min-h-[48px] sm:h-12 w-13 text-xl max-sm:text-xl rounded-sm swap max-sm:w-16">
-                            <input type="checkbox" defaultChecked={true} onClick={followManga}/>
+                            <input type="checkbox" defaultChecked={isFavorite} onClick={handleFavoriteBtnClick    }/>
                             <span className="swap-off fill-current"><BsFillBookmarkFill/></span>
                             <span className="swap-on fill-current "><BsFillBookmarkCheckFill/></span>
                         </label>

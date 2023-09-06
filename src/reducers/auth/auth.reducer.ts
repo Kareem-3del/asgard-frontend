@@ -1,7 +1,8 @@
 import {IUser} from "../../interfaces/user.interface";
 import {createAction, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {getUserThunk, loginThunk, logoutThunk} from "./actions/auth.actions";
+import {getUserThunk, loginThunk, logoutThunk, updateUser} from "./actions/auth.actions";
 import {AxiosResponse} from "axios";
+
 const initialState = {
     user: {} as IUser | null,
     isLoading: true as boolean,
@@ -20,11 +21,11 @@ const authReducer = createSlice({
     extraReducers: (builder) => {
 
 
-        builder.addCase(getUserThunk.pending, (state : typeof initialState) => {
+        builder.addCase(getUserThunk.pending, (state: typeof initialState) => {
             state.isLoading = true
         })
 
-        builder.addCase(getUserThunk.fulfilled, (state, {payload}: PayloadAction<IUser>  ) => {
+        builder.addCase(getUserThunk.fulfilled, (state, {payload}: PayloadAction<IUser>) => {
             console.log(payload)
             state.isLoading = false
             if (payload.id) {
@@ -33,12 +34,12 @@ const authReducer = createSlice({
             }
         })
 
+
         builder.addCase(getUserThunk.rejected, (state) => {
             state.isLoading = false
             state.isLogin = false
             state.user = null
         })
-
 
 
         // Sign IN
@@ -48,7 +49,7 @@ const authReducer = createSlice({
         })
 
 
-        builder.addCase(loginThunk.fulfilled, (state, {payload}  ) => {
+        builder.addCase(loginThunk.fulfilled, (state, {payload}) => {
             state.isLoading = false;
             if (payload.id) {
                 state.isLogin = true
@@ -65,9 +66,7 @@ const authReducer = createSlice({
         })
 
 
-
         // LogOut
-
 
 
         builder.addCase(logoutThunk.fulfilled, (state) => {
@@ -76,6 +75,11 @@ const authReducer = createSlice({
         })
 
 
+        // Update User
+
+        builder.addCase(updateUser, (state, {payload}: PayloadAction<Partial<IUser>>) => {
+            state.user = {...state.user, ...payload} as IUser
+        })
     }
 })
 

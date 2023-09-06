@@ -17,18 +17,28 @@ import {motion} from "framer-motion";
 import BadgeComponent from "../../components/badge/badge.component";
 import {AiFillFire} from "@react-icons/all-files/ai/AiFillFire";
 import EditMangaModal from "./modals/edit-manga.modal";
+import {IChapter} from "../../interfaces/chapter.interface";
 
 const MangaPage = () => {
     const {getMangaById} = useManga();
     const [manga, setManga] = useState<IManga>();
     const {mangaSlug} = useParams();
     const [showComments, setShowComments] = useState<boolean>();
+    function handleUpload(chapter:IChapter) {
+
+       // push new chapter to chapters array
+
+        setManga({
+            ...manga,
+            chapters : (manga?.chapters) ? [...manga.chapters , chapter] : [chapter]
+        } as IManga);
+        console.log(manga?.chapters,chapter)
+    }
+
     useEffect(() => {
         getMangaById(mangaSlug || 0).then((res: AxiosResponse<IManga>) => {
             setManga(res.data);
         });
-        //
-        Object.keys({"":""})?.[0].charAt(0)
     }, [mangaSlug])
     return (
         <>
@@ -75,7 +85,7 @@ const MangaPage = () => {
 
                 <EditMangaModal manga={manga}/>
                 <DeleteMangaModal manga={manga}/>
-                <UploadChapterModal manga={manga}/>
+                <UploadChapterModal manga={manga} handleUpload={handleUpload}/>
 
             </div>}
             {!manga && <div className="flex justify-center items-center h-screen">

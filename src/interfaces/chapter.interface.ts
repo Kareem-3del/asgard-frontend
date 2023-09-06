@@ -9,6 +9,7 @@ export interface IChapter {
     images_urls: string[];
     created_at: string;
     by_user_id: number;
+    badge? : string
 }
 
 export interface ICreateChapter {

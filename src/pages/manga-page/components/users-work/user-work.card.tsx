@@ -7,7 +7,7 @@ const UserWorkCard = ({user}:{user : IUser}) => {
     return (
         <Link to={`/user/${user.id}`} className=" flex h-20 justify-center relative items-center w-72 hover:brightness-[0.8] transition-all duration-300" dir="rtl">
             <figure className="w-20 h-20  relative flex-none">
-                <img className="w-full h-full rounded-full object-cover" src={user.avatar_url||soloLeveling} alt=""/>
+                <img className="w-full h-full rounded-full object-cover" src={user.avatar_url ||soloLeveling} alt=""/>
             </figure>
             <span className="absolute bg-base-300 h-16 w-20 right-4 -z-50"></span>
             <div dir="ltr" className="bg-base-300 w-full h-16 rounded-lg flex justify-center px-2 flex-col">

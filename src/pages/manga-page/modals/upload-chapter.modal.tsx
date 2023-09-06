@@ -4,9 +4,14 @@ import {createChapter} from "../../../services/chapter.service";
 import {useParams} from "react-router-dom";
 import {IManga} from "../../../interfaces/manga.interface";
 import {v4 as uuid} from "uuid";
+import useToaster from "../../../hooks/toast/useToaster.hook";
+import {IChapter} from "../../../interfaces/chapter.interface";
+import {AxiosResponse} from "axios";
 
-const UploadChapterModal = ({manga}: { manga: IManga }) => {
+const UploadChapterModal = ({manga , handleUpload}: { manga: IManga  , handleUpload? :(e: IChapter)=>void }) => {
+    const toaster = useToaster();
 
+    const checkboxRef = React.createRef<HTMLInputElement>()
     const fileInput = React.createRef<HTMLInputElement>()
     const [selectedFile, setSelectedFile] = useState<File>();
     const [fileName, setFileName] = useState("لم يتم اختيار ملف")
@@ -22,16 +27,44 @@ const UploadChapterModal = ({manga}: { manga: IManga }) => {
                 number: chapterNumber,
                 title: title,
                 zipFile: selectedFile
-            }).then(res => {
-                alert("تم رفع الفصل بنجاح")
-                console.log(res);
+            }).then((res:AxiosResponse<IChapter>) => {
+                toaster.createToast({
+                    message: "تم رفع الفصل بنجاح",
+                    type: "success"
+                });
+                if(handleUpload){
+                    handleUpload({
+                        ...res.data,
+                        badge:"الان"
+                    })
+                }
+                setChapterNumber((prev)=>{
+                    console.log(prev)
+                    if(prev)
+                        return prev + 1;
+                    return 1;
+                })
+                setTitle("");
+                checkboxRef.current?.click();
+
+            }).catch(err => {
+                console.log(err)
+                toaster.createToast({
+                    message: err.response?.data.message as string || "حدث خطأ اثناء رفع الفص",
+                    type: "error"
+                });
             })
+        }else {
+            toaster.createToast({
+                message: "يجب اختيار ملف",
+                type: "warning"
+            });
         }
 
     }
     return (
         <>
-            <input type="checkbox" id="upload-chapter" className="modal-toggle"/>
+            <input ref={checkboxRef} type="checkbox" id="upload-chapter"  className="modal-toggle"/>
             <div className="modal" dir="rtl">
                 <div className="modal-box relative">
                     <label htmlFor="upload-chapter" className="btn btn-sm btn-circle absolute left-2 top-2">✕</label>
@@ -44,7 +77,7 @@ const UploadChapterModal = ({manga}: { manga: IManga }) => {
                     <div className="flex space-y-3 flex-col">
                         <input type="text" onChange={(e) => setTitle(e.currentTarget.value)} placeholder="عنوان الفصل"
                                className="input input-bordered w-full "/>
-                        <input type="number" onChange={(e) => setChapterNumber(Number(e.currentTarget.value))}
+                        <input type="number" value={chapterNumber} onChange={(e) => setChapterNumber(Number(e.currentTarget.value))}
                                placeholder="رقم الفصل" className="input input-bordered w-full "/>
 
 

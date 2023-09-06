@@ -5,14 +5,17 @@ import {AiFillDelete} from "@react-icons/all-files/ai/AiFillDelete";
 import {AiFillEdit} from "@react-icons/all-files/ai/AiFillEdit";
 import {BiShow} from "@react-icons/all-files/bi/BiShow";
 import CreateMangaComponent from "./create-manga/create-manga.component";
+import useAuth from "../../../../hooks/auth/useAuth.hook";
+import MangaSlideCardV3 from "../../../manga-page/manga-slider/manga-slide.card";
 
 const MyLibraryPage = () => {
+    const {user} = useAuth()
     return (
         <div className="w-full h-full">
 
 
             <div className="flex">
-                <div className="w-72 bg-base-200 p-3 flex-none rounded-sm">
+                <div className="w-72 mt-5 p-3 flex-none rounded-sm">
 
 
                     <label className="btn btn-outline w-full rounded-full" htmlFor="create-manga">
@@ -22,15 +25,24 @@ const MyLibraryPage = () => {
 
                     </label>
                 </div>
-                <div className="w-full bg-base-200  mr-3 rounded-sm">
-
-                </div>
             </div>
-            <div className="bg-base-200 mt-3 rounded-sm p-1 flex w-full">
-                <ul className="bg-base-300 w-full p-3 space-y-3 h-full overflow-y-scroll" dir="rtl">
+            <div className=" rounded-box mt-3  p-1 flex w-full">
+                <ul className="bg-base-200/80 w-full p-3  space-y-3 h-full overflow-y-scroll" dir="rtl">
 
-                    <div className="flex justify-center itesm -">
-                        لا يوجد اي مانجا (خطا 300)
+                    <div className="flex  flex-wrap">
+                        {
+                            user && user?.manga_work_in?.map((manga, index) => {
+                                return <div className="w-96 h-full m-3" key={`manga_work_${manga.id}`} dir="ltr">
+                                                <MangaSlideCardV3 manga={manga}/>
+                                         </div>
+                            })
+                        }
+                        {
+                            user && user?.manga_work_in?.length === 0 &&
+                            <div className="flex justify-center items-center w-full h-full">
+                                <span className="text-2xl text-base-400">لا يوجد لديك مانجا</span>
+                            </div>
+                        }
                     </div>
                 </ul>
             </div>
@@ -45,51 +57,4 @@ const MyLibraryPage = () => {
     );
 }
 
-const CardManga = () => {
-    return (
-        <li className="w-full bg-base-100 h-36 p-2 rounded-md flex">
-            <div className="flex flex-none">
-                <div className="avatar h-full">
-                    <div className="w-28 rounded">
-                        <img src={soloLeveling} alt=""/>
-                    </div>
-                </div>
-
-                <div className="mr-2 flex flex-col justify-center space-y-1">
-                    <h1 className="text-3xl font-semibold">SOLO LEVELING HEIGHT CLASS S2</h1>
-                    <h2>
-
-                        عدد الفصول :
-                        <span className="text-accent"> 12</span>
-                    </h2>
-                    <h2>
-
-                        تاريخ الاضافة :
-                        <span className="text-accent">12/20/2020</span>
-                    </h2>
-                    <div className="space-x-1" dir="ltr">
-                        <div className="badge">اكشن</div>
-                        <div className="badge">مغامرات</div>
-                        <div className="badge">قتال</div>
-                        <div className="badge">رومانسي</div>
-                    </div>
-
-                </div>
-
-            </div>
-            <div className="flex text-3xl space-x-3 mr-auto h-full justify-center items-center w-full"
-                 dir="ltr">
-                <button className="btn text-2xl btn-info  btn-circle">
-                    <AiFillEdit/>
-                </button>
-                <button className="btn text-2xl btn-error  btn-circle">
-                    <AiFillDelete/>
-                </button>
-                <button className="btn text-2xl btn-primary  btn-circle">
-                    <BiShow/>
-                </button>
-            </div>
-        </li>
-    );
-}
 export default MyLibraryPage;

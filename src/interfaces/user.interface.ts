@@ -1,4 +1,4 @@
-import {IManga} from "./manga.interface";
+import {IManga, IRate} from "./manga.interface";
 
 export interface IUser {
     id: number,
@@ -12,6 +12,12 @@ export interface IUser {
     "avatar_url": string
     "role_name": string,
     "coins": number,
+    allow_notifications: boolean,
+    allow_messages: boolean,
+    rates: IRate[],
+    manga_favorite: IManga[],
+    manga_work_in: IManga[],
+    chaptersBought: IManga[],
 }
 export interface ILogin {
     token: string,

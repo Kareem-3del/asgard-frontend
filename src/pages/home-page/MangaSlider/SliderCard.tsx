@@ -8,6 +8,7 @@ import {VscDebugBreakpointData} from "@react-icons/all-files/vsc/VscDebugBreakpo
 import {Link} from "react-router-dom";
 import {IManga} from "../../../interfaces/manga.interface";
 import {FaPlay} from "@react-icons/all-files/fa/FaPlay";
+import {Rating} from "../../../components/rating/rating.component";
 
 export default function SliderCard({manga}:{manga:IManga}) {
     return (
@@ -47,14 +48,8 @@ export default function SliderCard({manga}:{manga:IManga}) {
                             </span>
                             <div className="sliderCard--actions mr-5 ml-3 p-8 justify-center items-center">
                                 <div className="flex h-11 justify-center items-center  mb-2">
-                                   <div
-                                        className="rating h-full min-h-[62px] items-center justify-center px-8 w-52 bg-base-100 rounded-lg">
-                                        <input type="radio" name={`top_manga_rate_${manga.id}`} className="mask mask-star-2 bg-orange-400"/>
-                                        <input type="radio" name={`top_manga_rate_${manga.id}`} className="mask mask-star-2 bg-orange-400" defaultChecked={true}/>
-                                        <input type="radio" name={`top_manga_rate_${manga.id}`} className="mask mask-star-2 bg-orange-400"/>
-                                        <input type="radio" name={`top_manga_rate_${manga.id}`} className="mask mask-star-2 bg-orange-400"/>
-                                        <input type="radio" name={`top_manga_rate_${manga.id}`} className="mask mask-star-2 bg-orange-400"/>
-                                    </div>
+                                    <Rating disabled={true} manga={manga} className=" h-full min-h-[62px] items-center justify-center px-8 w-52 bg-base-100 rounded-lg"/>
+
                                     <div className="sliderCard--flag min-h-[62px]  w-16 h-full ml-2">
                                         <img className="h-full w-full  rounded-lg" src={KoreanFlag} alt=""/>
                                     </div>

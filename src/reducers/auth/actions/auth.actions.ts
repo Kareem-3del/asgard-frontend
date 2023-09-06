@@ -1,5 +1,5 @@
 import AuthService from "../../../services/auth.service";
-import {createAsyncThunk} from "@reduxjs/toolkit";
+import {createAction, createAsyncThunk} from "@reduxjs/toolkit";
 import {AxiosResponse} from "axios";
 import {ILogin, IUser} from "../../../interfaces/user.interface";
 import {IException} from "../../../interfaces/exception.interface";
@@ -20,6 +20,12 @@ export const loginThunk = createAsyncThunk("auth/login", async (loginData: ISign
         error = error as AxiosResponse<IException>;
         return rejectWithValue(error as IException);
     }
+});
+
+export const updateUser = createAction("auth/update",  (data: Partial<IUser>) => {
+    return {
+        payload: data,
+    };
 });
 
 export const registerThunk = createAsyncThunk("auth/register", async (registerData: IRegister, {rejectWithValue}) => {
@@ -47,6 +53,8 @@ export const getUserThunk = createAsyncThunk("auth", async (payload, {rejectWith
         return rejectWithValue(error);
     }
 });
+
+
 
 export const logoutThunk = createAsyncThunk("auth/logout", () => {
     return AuthService.logout();

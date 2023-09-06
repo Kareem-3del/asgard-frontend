@@ -41,9 +41,37 @@ const logout = () => {
     localStorage.removeItem("user");
 }
 
+
+const updateUserInfo = (data: Partial<IUser>) => {
+    return apiClient.put(`/users/me`, data);
+}
+
+const changeAvatar = (avatar: File) => {
+    const formData = new FormData();
+    formData.append("avatar", avatar);
+    return apiClient.put(`/users/me/avatar`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+}
+
+const changeCover = (cover: File) => {
+    const formData = new FormData();
+    formData.append("cover", cover);
+    return apiClient.put(`/users/me/cover`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+}
+
 export default {
     register,
     getCurrentUser,
     login,
     logout,
+    updateUserInfo,
+    changeAvatar,
+    changeCover
 };

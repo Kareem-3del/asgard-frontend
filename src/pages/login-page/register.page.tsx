@@ -1,5 +1,4 @@
 import {useForm} from "react-hook-form";
-import React, {useEffect} from "react";
 import {AiFillLock} from "@react-icons/all-files/ai/AiFillLock";
 import {loginThunk, registerThunk} from "../../reducers/auth/actions/auth.actions";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";

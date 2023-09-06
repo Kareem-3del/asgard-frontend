@@ -68,18 +68,22 @@ const updateMangaAPI = (id: number, data: IUpdateManga) => {
 const deleteMangaAPI = (id: number) => {
     return apiClient.delete(`manga/${id}`);
 }
-const followMangaAPI = (id: number) => {
-    return apiClient.post(`manga/${id}/follow`);
+
+const addMangaToFavoriteAPI = (id: number) => {
+    return apiClient.post(`manga/${id}/favorite`);
 }
-const unfollowMangaAPI = (id: number) => {
-    return apiClient.delete(`manga/${id}/follow`);
-}
-const getMangaFollowersAPI = (id: number) => {
-    return apiClient.get(`manga/${id}/followers`);
+
+const removeMangaFromFavoriteAPI = (id: number) => {
+    return apiClient.delete(`manga/${id}/favorite`);
 }
 const getMangaUsersWorkingAPI = (id: number) => {
     return apiClient.get(`manga/${id}/users_working`);
 }
+
+const rateMangaAPI = async (id: number, rate: number) => {
+    return await apiClient.post(`manga/${id}/rate`, {rate});
+}
+
 
 export const getMangaAdminAPI = async ({offset = 0, limit = 20, startId,}: { offset?: number, limit?: number, startId?: number }): Promise<AxiosResponse<ISearchManga>> => {
     return await apiClient.get(`manga/`, {
@@ -98,9 +102,9 @@ export default {
     createMangaAPI,
     updateMangaAPI,
     deleteMangaAPI,
-    followMangaAPI,
-    unfollowMangaAPI,
-    getMangaFollowersAPI,
+    addMangaToFavoriteAPI,
+    removeMangaFromFavoriteAPI,
     getMangaUsersWorkingAPI,
-    getMangaAdminAPI
+    getMangaAdminAPI,
+    rateMangaAPI
 };

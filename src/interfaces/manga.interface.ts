@@ -17,6 +17,7 @@ export enum MangaTypesEnum {
 
 export interface IManga {
     id: number;
+    users_favorites: IUser[];
     title: string;
     story: string;
     cover_url: string;
@@ -31,8 +32,19 @@ export interface IManga {
     chapters: IChapter[];
     users_working: IUser[];
     created_by: IUser;
+    rating : number;
+    rates : IRate[];
 }
 
+export interface IRate {
+    id: number;
+    rate: number;
+    manga: IManga;
+    manga_id: number;
+    user: IUser;
+    user_id: number;
+    created_at: Date;
+}
 export interface ICreateManga {
     title: string;
     story: string;

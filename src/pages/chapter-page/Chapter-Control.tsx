@@ -8,25 +8,30 @@ import useToaster from "../../hooks/toast/useToaster.hook";
 import {deleteChapter} from "../../services/chapter.service";
 import {AxiosError, AxiosResponse} from "axios";
 import {IException} from "../../interfaces/exception.interface";
-
+import {useNavigate} from "react-router-dom";
 const toaster = useToaster();
 
 
 const DeleteChapterModal = (props: { chapter: IChapter }) => {
-   const handleDeleteChapter = () => {
-       deleteChapter(props.chapter.id).then((res:AxiosResponse<IException>)=>{
-           toaster.createToast({
-               message: res.data.message as string,
-               type: "success"
-           });
-       }).catch((err:AxiosError<IException>)=>{
-           toaster.createToast({
-               message: err.response?.data.message as string || err.message,
-               type: "error"
-           });
-       });
-   }
+    const Navigate = useNavigate();
+    const handleDeleteChapter = () => {
+        deleteChapter(props.chapter.id).then((res: AxiosResponse<IException>) => {
+            toaster.createToast({
+                message: res.data.message as string,
+                type: "success"
+            });
+            // delete last parm from url
 
+            let url = window.location.pathname.split("/");
+            url.pop();
+             Navigate(url.join("/"));
+        }).catch((err: AxiosError<IException>) => {
+            toaster.createToast({
+                message: err.response?.data.message as string || err.message,
+                type: "error"
+            });
+        });
+    }
 
 
     return (
@@ -41,7 +46,8 @@ const DeleteChapterModal = (props: { chapter: IChapter }) => {
                         <label htmlFor="delete-chapter" className="btn">الغاء</label>
                         <button
                             onClick={handleDeleteChapter}
-                            className="btn btn-error">حذف</button>
+                            className="btn btn-error">حذف
+                        </button>
                     </div>
                 </div>
             </div>

@@ -25,12 +25,15 @@ import NewsPage from "./pages/news-page/news.page";
 import MyChatPage from "./pages/account/user/my-chat/my-chat.page";
 import RegisterPage from "./pages/login-page/register.page";
 import BinAdminPage from "./pages/account/admin/bin-admin/bin-admin.page";
-
+import dayjs from 'dayjs';
+import 'dayjs/locale/ar';
+import relativeTime from "dayjs/plugin/relativeTime";
 function App() {
-
+    dayjs.extend(relativeTime)
+    dayjs().locale('ar')
     return (
         <div>
-            <p hidden className="text-success-content bg-success bg-error text-error-content text-info-content bg-info bg-warning text-warning-content"></p>
+            <p hidden className="text-success-content text-warning  bg-success bg-error text-error-content text-info-content bg-info bg-warning text-warning-content"></p>
 
             <div className="drawer  drawer-end">
                 <input id="sidebar" type="checkbox" className="drawer-toggle"/>

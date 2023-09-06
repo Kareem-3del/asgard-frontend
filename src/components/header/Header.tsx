@@ -170,7 +170,7 @@ export default function Header() {
                             <label tabIndex={0} className="btn    h-14 px-3 rounded-lg" dir="ltr">
                                 <div className="avatar w-10 ">
                                     <div className="rounded-lg">
-                                        <img src={soloLeveling} className="object-cover" alt="image"/>
+                                        <img src={user?.avatar_url ||soloLeveling} className="object-cover" alt="image"/>
                                     </div>
                                 </div>
                                 {
