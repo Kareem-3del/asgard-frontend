@@ -18,6 +18,7 @@ import BadgeComponent from "../../components/badge/badge.component";
 import {AiFillFire} from "@react-icons/all-files/ai/AiFillFire";
 import EditMangaModal from "./modals/edit-manga.modal";
 import {IChapter} from "../../interfaces/chapter.interface";
+import WriteNovelChapter from "./modals/write-novel-chapter.modal";
 
 const MangaPage = () => {
     const {getMangaById} = useManga();
@@ -25,8 +26,6 @@ const MangaPage = () => {
     const {mangaSlug} = useParams();
     const [showComments, setShowComments] = useState<boolean>();
     function handleUpload(chapter:IChapter) {
-
-       // push new chapter to chapters array
 
         setManga({
             ...manga,
@@ -40,57 +39,78 @@ const MangaPage = () => {
             setManga(res.data);
         });
     }, [mangaSlug])
+    function handleDeleteChapters(chaptersStatus : {chapter : IChapter , done : boolean}){
+        // delete chapter from selected chapters
+        if(chaptersStatus.done){
+            setManga({
+                ...manga,
+                chapters : manga?.chapters?.filter((chapter)=>{
+                    return chapter.id !== chaptersStatus.chapter.id;
+                })
+            } as IManga);
+        }
+
+    }
     return (
         <>
             {manga && <div className="z-0">
-                <MangaMainInfoComponent onCommentsBtnClick={() => setShowComments(!showComments)} manga={manga}/>
-                <div className="mt-3 flex justify-center items-center container mx-auto max-sm:hidden">
-                    <AdsComponent width="100%" size={"wide-sm"}/>
-
-                </div>
-                <div className="container mx-auto space-x-2 flex my-3 max-sm:flex-col-reverse">
-                    <div className="flex-col space-between w-9/12 max-sm:w-full">
-                        <motion.div
-                            key={`a-${showComments}`}
-                            initial={{opacity: 0}}
-                            animate={{opacity: 1}}
-                            transition={{duration: 1}}
-                            className="flex flex-col space-y-2">
-                            {
-                                (showComments) ? <Comments/> : <div>
-                                    <MangaChaptersComponent chapters={manga.chapters}/>
-                                    <UsersWorkComponent users={manga.users_working}/>
-                                </div>
-
-                            }
-
-                        </motion.div>
-
+                <MangaMainInfoComponent  onCommentsBtnClick={() => setShowComments(!showComments)} manga={manga}/>
+                <div className="p-3">
+                    <div className="mt-3 flex justify-center items-center container mx-auto max-sm:hidden">
+                        <AdsComponent width="100%" size={"wide-sm"}/>
 
                     </div>
-                    <div className="flex-col space-y-2 w-3/12 max-sm:w-full max-sm:pr-4">
-                        <MangaStoryComponent story={manga.story}/>
-                        <AdsComponent width="auto" size={"box-sm"}/>
+                    <div className="container h-[662px] mx-auto space-x-2 flex my-3 ">
+                        <div className="flex-col h-full space-between w-9/12 max-sm:w-full">
+                            <motion.div
+                                key={`a-${showComments}`}
+                                initial={{opacity: 0}}
+                                animate={{opacity: 1}}
+                                transition={{duration: 1}}
+                                className="flex flex-col h-full space-y-2">
+                                {
+                                    (showComments) ? <Comments id={`manga_${manga.id}`}/> : <>
+                                        <MangaChaptersComponent onDelete={handleDeleteChapters} chapters={manga.chapters}/>
+                                        <UsersWorkComponent users={manga.users_working}/>
+                                    </>
+
+                                }
+
+                            </motion.div>
+                        </div>
+                        <div className="flex-col space-y-2 w-3/12 hidden md:flex max-sm:w-full max-sm:pr-4">
+                            <MangaStoryComponent story={manga.story}/>
+                            <AdsComponent className=" h-full " width="100%" size={"box-sm"}/>
+                        </div>
+                    </div>
+                    <div className="mt-3 flex justify-center items-center container mx-auto max-sm:hidden">
+                        <AdsComponent width="100%" size={"wide-sm"}/>
+
+                    </div>
+
+                    <div className="w-full justify-center flex my-5 mt-3 px-3">
+                        <BadgeComponent options={{
+                            divClass: "w-64 px-4",
+                            textClass: "text-xl",
+
+
+                        }} icon={<AiFillFire/>} text="الاعمال المشابهة"/>
+                    </div>
+                    <MangaSliderV3/>
+                    <EditMangaModal manga={manga}/>
+                    <DeleteMangaModal manga={manga}/>
+                    <UploadChapterModal manga={manga} handleUpload={handleUpload}/>
+                    <WriteNovelChapter manga={manga} handleUpload={handleUpload}/>
+                    <div className="mt-3 flex justify-center items-center container mx-auto max-sm:hidden">
+                        <AdsComponent width="100%" size={"wide-sm"}/>
+
                     </div>
                 </div>
-                <div className="w-full justify-center flex my-8 px-3">
-                    <BadgeComponent options={{
-                        divClass: "w-64 h-16",
-                        textClass: "text-xl",
-
-
-                    }} icon={<AiFillFire/>} text="الاعمال المشابهة"/>
-                </div>
-                <MangaSliderV3/>
-
-                <EditMangaModal manga={manga}/>
-                <DeleteMangaModal manga={manga}/>
-                <UploadChapterModal manga={manga} handleUpload={handleUpload}/>
-
             </div>}
             {!manga && <div className="flex justify-center items-center h-screen">
                 Loading....
             </div>}
+
         </>
     );
 }

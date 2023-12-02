@@ -1,37 +1,30 @@
-
 import soloLeveling from "../../assets/images/solo-leveling_.png";
 import koreanFlag from "../../assets/images/Flag_of_South_Korea.svg.png";
 import {VscDebugBreakpointData} from "@react-icons/all-files/vsc/VscDebugBreakpointData";
 import React from "react";
 import {IManga} from "../../interfaces/manga.interface";
-const MangaCollectionCard = ({manga}:{manga : IManga}) => {
+import {Rating} from "../rating/rating.component";
+import {TypeImage} from "../type-image/type-image.component";
+import {Link} from "react-router-dom";
 
-    return(
-        <div className="flex  bg-base-100 p-2 rounded">
-            <figure className="h-20 w-14 flex-none">
-                <img className="w-full h-full object-cover rounded" src={manga.cover_url} alt=""/>
-            </figure>
-            <div className="mx-3  w-full">
-                <h2 className="font-semibold text-xl">{manga.title}</h2>
-                <div className="rating rating-sm">
-                    <input type="radio"  className="mask mask-star-2 bg-orange-400"/>
-                    <input type="radio"  className="mask mask-star-2 bg-orange-400" defaultChecked={true}/>
-                    <input type="radio"  className="mask mask-star-2 bg-orange-400"/>
-                    <input type="radio"  className="mask mask-star-2 bg-orange-400"/>
-                    <input type="radio"  className="mask mask-star-2 bg-orange-400"/>
+const MangaCollectionCard = ({manga, type}: { manga: IManga, type?: "mid" | "end" | "start" }) => {
+
+    return (
+        <div className="flex h-24 justify-center items-center w-full">
+            <Link to={`/manga/${manga.slug}`} className=" h-24 w-[4.5rem] flex-none mr-1">
+                <img className="w-full h-full object-cover rounded-lg" src={manga.cover_url} alt=""/>
+            </Link>
+
+            <div className={`flex w-full bg-base-100 p-2 rounded-xl rounded-l-sm  ${(type === "start") ? "rounded-b-sm" : ""}  ${(type === "mid") ? "rounded-t-sm rounded-b-sm" : ""}  ${(type === "end") ? "rounded-t-sm" : ""}`}><div className="mx-2 w-full flex flex-col justify-center h-20 ">
+                    <Link to={`/manga/${manga.slug}`} className="font-semibold text-xl mb-1 capitalize hover:text-primary">{manga.title}</Link>
+                    <div className="flex space-x-1">
+                        <Rating disabled={true} manga={manga}
+                                className="bg-base-300 rating-sm h-8 px-4 justify-center items-center rounded-lg rounded-r-sm"/>
+                        <TypeImage mangaType={manga.type} largeIcons={true} className="h-8 w-8 rounded-lg rounded-l-sm"/>
+                    </div>
                 </div>
 
-                <div className="flex mt-1">
-                    <img className="h-6 w-8" src={koreanFlag} alt=""/>
-                    <p className="mx-3 bg-base-300 px-2 ">
-                      مستمر
-                    </p>
-                    <span className="h-6 flex justify-center items-center rounded bg-base-300 px-2">
-                        <VscDebugBreakpointData className="text-green-400"/>
-                    </span>
-                </div>
             </div>
-
         </div>
     )
 }

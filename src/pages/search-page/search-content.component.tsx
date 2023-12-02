@@ -20,10 +20,21 @@ const SearchContentComponent = ({manga , count} : {manga : IManga[], count:numbe
     }
     return (
         <div className="container mx-auto">
-            <motion.div key={page} className="w-full flex flex-wrap justify-around p-3 " initial={{opacity: 0}}
+
+            <motion.div key={page}
+                        className="w-full flex flex-wrap justify-around p-3 "
+                        initial={{opacity: 0}}
                         animate={{opacity: 1}} transition={{duration: 0.5}}>
-                {manga.map((manga, index) => <SearchMangaCard manga={manga} key={`manga_search_${index}`}/>)}
+                {manga.map((manga, index) =>
+                    <SearchMangaCard manga={manga} key={`manga_search_${index}`}/>
+                )}
             </motion.div>
+
+
+
+
+
+
             <div className="w-full flex justify-center mb-5">
                 <div className="btn-group">
                     {Array.from(Array(around(manga.length / cardsPerPage)), (e, i) => {

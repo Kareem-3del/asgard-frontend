@@ -14,6 +14,7 @@ import MangaSliderMobile from "./MangaSlider/MangaSliderMobile";
 import AdsComponent from "../../components/ads/ads.component";
 import NewsPage from "../news-page/news.page";
 import {Outlet} from "react-router-dom";
+import { GiTrophyCup } from "react-icons/gi";
 
 export default function HomePage() {
     const [manga, setManga] = React.useState<IManga[]>([]);
@@ -30,21 +31,21 @@ export default function HomePage() {
             <div className="flex flex-col justify-center items-center z-0">
 
 
-                <div className="flex w-full lg:hidden">
+         {/*       <div className="flex w-full lg:hidden">
                     <MangaSliderMobile/>
-                </div>
-                <div className="flex w-full max-lg:hidden">
+                </div>*/}
+                <div className="flex w-full {/*max-lg:hidden*/}">
                     <MangaSlider/>
                 </div>
 
-
-                <div className="w-full justify-end flex mt-8 px-3 ">
-                    <BadgeComponent icon={<AiFillFire className="text-orange-400"/>} text="احدث الفصول"/>
-                </div>
-                <div className="mt-3 flex justify-center items-center container mx-auto">
+                <div className="-mt-8 rounded-2xl overflow-hidden flex justify-center items-center container mx-auto">
                     <AdsComponent width="100%" size={"wide-sm"}/>
 
                 </div>
+                <div className="w-full mt-8 px-auto flex justify-center">
+                    <BadgeComponent icon={<AiFillFire/>} text="احدث الفصول"/>
+                </div>
+
                 <div className="flex justify-center items-center flex-wrap mt-5 container">
 
                     {
@@ -55,24 +56,24 @@ export default function HomePage() {
                     }
 
                 </div>
-                <div className="mt-3 flex justify-center items-center container mx-auto space-x-3">
+                <div className="mt-3 flex justify-center  items-center container mx-auto space-x-3">
                     <AdsComponent width="100%" size={"wide-sm"}/>
                     <AdsComponent width="100%" size={"wide-sm"}/>
                 </div>
-                <div
-                    className="grid grid-cols-12 grid-rows-1 w-full overflow-hidden lg:space-x-3 p-3 max-sm:grid-cols-1 "
-                    dir="ltr">
-                    <div className="lg:col-span-3 sm:col-span-5">
+                <div className="flex container justify-center space-x-3  flex-nowrap my-4" dir="ltr">
+             {/*       <div className="w-96 flex-none ">
                         <div className="justify-center items-center flex mb-3">
-                            <BadgeComponent icon={<BsCollectionPlayFill className="text-red-400"/>} text="المجموعات"/>
+                            <BadgeComponent icon={<GiTrophyCup/>} text="الافضل"/>
                         </div>
                         <MangaCollectionComponent/>
-                    </div>
-                    <div className="max-sm:mt-5 lg:col-span-9 h-full sm:col-span-7">
-                        <div className="justify-center items-center flex mb-3">
-                            <BadgeComponent icon={<HiNewspaper className="text-blue-400"/>} text="أهم الأخبار"/>
+                    </div>*/}
+                    <div className="w-full overflow-x-hidden ">
+                        <div className="w-full">
+                            <div className="justify-center items-center flex mb-3">
+                                <BadgeComponent icon={<HiNewspaper/>} text="أهم الأخبار"/>
+                            </div>
+                            <NewsSlider/>
                         </div>
-                        <NewsSlider/>
                     </div>
                 </div>
 

@@ -38,15 +38,20 @@ interface IProps {
     size: keyof typeof sizes
     width?: string
     height?: string
+    className?: string
 }
 
 const AdsComponent = (options: IProps) => {
 
     return (
-        <div style={{height: (options.height) ? options.height : sizes[options.size].height , width : (options.width)? options.width : sizes[options.size].width}} className="bg-base-300 rounded flex justify-center items-center border-primary/10 border relative z-0">
+        <div  style={{height: (options.height) ? options.height : sizes[options.size].height , width : (options.width)? options.width : sizes[options.size].width}} className={`bg-primary/30  p-2 flex justify-center items-center border-primary/10 border relative z-0 rounded-xl overflow-hidden ${options.className}`}>
 
-            <img src={adsImage} className="w-full h-full absolute -z-50 object-cover opacity-20" alt=""/>
-            <h2 className="text-3xl opacity-50 font-semibold">اعلان </h2>
+            <div className="h-full  bg-base-300 rounded-xl justify-center items-center flex w-full">
+                <h2 className="text-3xl text-base-content opacity-50 font-semibold">اعلان </h2>
+            </div>
+{/*
+            <img src={adsImage} className="w-full h-full absolute  -z-50 object-cover opacity-20" alt=""/>
+*/}
         </div>
     );
 };

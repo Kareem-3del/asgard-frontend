@@ -1,0 +1,23 @@
+#commento{
+    --tw-bg-opacity: 1;
+    padding: 1rem;
+    background-color: hsl(var(--b3, var(--b2)) / var(--tw-bg-opacity));
+    border-radius: 0.75rem;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.commento-root .commento-card{
+    border : none!important;
+    padding: 1rem!important;
+    padding-bottom: 0.3rem!important;
+    border-radius: 0.6rem;
+    --tw-bg-opacity: 1;
+    background-color: hsl(var(--b1) / var(--tw-bg-opacity));
+}
+#commento-textarea-root{
+    border-radius: 0.6rem;
+    background-color: hsl(var(--b1) / var(--tw-bg-opacity));
+}
+.commento-root-font *{
+    font-family: "Khand", "Tajawal", cursive!important;
+}

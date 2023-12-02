@@ -2,6 +2,7 @@ import {apiClient} from "../api/apiConfig";
 import {AxiosError, AxiosResponse} from "axios";
 import {ILogin, IUser} from "../interfaces/user.interface";
 import {IException} from "../interfaces/exception.interface";
+import {INotification} from "../interfaces/notification.interface";
 
 const register = (username: string, email: string, password: string) => {
     return apiClient.post("auth/register", {
@@ -35,6 +36,13 @@ const login = (email: string, password: string) => {
 
 const getCurrentUser = async () : Promise<IUser> => {
     return (await apiClient.get("/auth")).data;
+}
+
+const getNotifications = async ():Promise<INotification[]> => {
+    return (await apiClient.get("/notifications")).data;
+}
+const deleteNotification = async (notificationId: number) => {
+    return (await apiClient.delete(`/notifications/${notificationId}`)).data;
 }
 const logout = () => {
     localStorage.removeItem("token");
@@ -73,5 +81,7 @@ export default {
     logout,
     updateUserInfo,
     changeAvatar,
-    changeCover
+    changeCover,
+    getNotifications,
+    deleteNotification
 };

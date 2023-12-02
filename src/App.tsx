@@ -6,7 +6,6 @@ import {Route, Routes} from "react-router-dom";
 import UserPage from "./pages/user-page/user.page";
 import UserInfoComponent from "./pages/user-page/UserInfo.component";
 import React from "react";
-import UserLibraryComponent from "./pages/user-page/UserLibrary.component";
 import ChapterPage from "./pages/chapter-page/ChapterPage";
 import SearchPage from "./pages/search-page/search.page";
 import LoginPage from "./pages/login-page/login.page";
@@ -39,7 +38,7 @@ function App() {
                 <input id="sidebar" type="checkbox" className="drawer-toggle"/>
                 <div className="drawer-content z-0 flex h-full flex-col">
                     <Header/>
-                    <div className="  relative  h-full">
+                    <div className="  relative max-w-screen  h-full p-0">
                         <Routes>
                             <Route path="" element={<HomePage/>}>
                                 <Route path="news/:id/:rand" index element={<NewsPage/>}/>
@@ -50,9 +49,8 @@ function App() {
                                 <Route path=":mangaSlug/:chapterNumber" element={<ChapterPage/>}/>
                             </Route>
 
-                            <Route path="user/:userId/*" element={<UserPage/>}>
+                            <Route path="user/:userId" element={<UserPage />}>
                                 <Route index element={<UserInfoComponent/>}/>
-                                <Route path="library" element={<UserLibraryComponent/>}/>
                             </Route>
                             <Route path="/auth">
                                 <Route path="login" element={<LoginPage/>}/>

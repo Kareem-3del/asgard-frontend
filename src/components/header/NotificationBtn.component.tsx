@@ -1,16 +1,39 @@
-import React from "react";
-import {IoNotifications} from "@react-icons/all-files/io5/IoNotifications";
-import {IoNewspaperSharp} from "@react-icons/all-files/io5/IoNewspaperSharp";
+import {useEffect, useState} from "react";
 import soloLeveling from "../../assets/images/solo-leveling_.png";
 import {RiCloseCircleFill} from "@react-icons/all-files/ri/RiCloseCircleFill";
 import {Link} from "react-router-dom";
 import {SiGooglemessages} from "@react-icons/all-files/si/SiGooglemessages";
 import {IoNotificationsOffSharp} from "react-icons/all";
-import {useAppSelector} from "../../hooks/redux";
+import {INotification} from "../../interfaces/notification.interface";
+import {IChp} from "../../pages/account/admin/bin-admin/ChapterList";
+import useAuth from "../../hooks/auth/useAuth.hook";
+import service from "../../services/auth.service";
+import useToaster from "../../hooks/toast/useToaster.hook";
 
 const NotificationBtnComponent = () => {
-    const [notification, setNotification] = React.useState([0, 1, 2, 3]);
-    const {isLogin} = useAppSelector(((state) => state.auth));
+    const [notification, setNotification] = useState<INotification[]>([]);
+    const toaster = useToaster()
+    const {isLogin} = useAuth()
+    useEffect(() => {
+        service.getNotifications().then(res => {
+            setNotification(res)
+        })
+    }, []);
+
+    function handleDeleteNotification(notificationId:number) {
+        service.deleteNotification(notificationId).then(res=>{
+            setNotification(notification.filter(item=>item.id !== notificationId))
+            toaster.createToast({
+                message: "تم حذف الاشعار بنجاح",
+                type: "success"
+            })
+        }).catch(err=>{
+            toaster.createToast({
+                message: "حدث خطأ اثناء حذف الاشعار",
+                type: "error"
+            })
+        })
+    }
     return (
         <div className="dropdown   z-10" dir="ltr">
             <button className={`btn btn-ghost btn-circle ${!isLogin ? "hidden" : ""}`} disabled={!isLogin}>
@@ -23,25 +46,35 @@ const NotificationBtnComponent = () => {
                     <span className={`badge badge-xs badge-primary indicator-item ${!isLogin ? "hidden" : ""}`}></span>
                 </div>
             </button>
+            <div className='dropdown-content bg-base-300 rounded-lg rounded-t-sm  overflow-x-hidden   p-2'>
+                <ul tabIndex={0}
+                    className="  max-h-[420px] overflow-y-scroll p-2 shadow  mt-3 w-72  flex-col flex-nowrap space-y-1">
+                    {
 
-            <ul tabIndex={0}
-                className="dropdown-content   menu p-1 shadow bg-base-200 rounded-sm mt-3 w-72 max-h-[400px] overflow-x-hidden overflow-y-scroll flex-col flex-nowrap space-y-2">
-                {/*         {
-                    notification.map((item, index) => <NotificationCardMessage key={`notification_${index}`}/>)
+                        notification.map((item, index) => {
+                            if (item.chapter) {
+                                return <NotificationCardNewChapter
+                                    onDelete={()=>{
+                                        handleDeleteNotification(item.id)
+                                    }}
+                                    key={`notification_${index}`} chapter={item.chapter}
+                                                                   isRead={false}/>
+                            }
+                        })
+                    }
+                    {
+                        notification.length === 0 &&
+                        <p className="w-full bg-base-300 p-3 text-center flex justify-center items-center space-x-3 rounded-lg"
+                           dir="ltr">
+                            <span className="mr-2"><IoNotificationsOffSharp/></span>
 
-                }
-                {
-                    notification.map((item, index) => <NotificationCardNewChapter key={`notification_${index}`} chapterNumber={1} isRead={false} mangaName={"SOLO LEVELING"} mangaImage={soloLeveling}/>)
+                            لا يوجد اشعارات حاليا
 
-                }*/}
+                        </p>
+                    }
+                </ul>
+            </div>
 
-                <p className="w-full bg-base-300 p-3 text-center flex justify-center items-center space-x-3 rounded-lg" dir="ltr">
-                    <span className="mr-2"><IoNotificationsOffSharp/></span>
-
-                    لا يوجد اشعارات حاليا
-
-                </p>
-            </ul>
         </div>
     )
 
@@ -68,31 +101,32 @@ const NotificationCardMessage = () => {
         </div>
     )
 }
-
-interface NotificationCardNewChapterProps {
-    mangaName: string,
-    mangaImage: string,
-    chapterNumber: number,
-    isRead: boolean
-}
-
-const NotificationCardNewChapter = (props: NotificationCardNewChapterProps) => {
+const NotificationCardNewChapter = ({chapter, isRead , onDelete}: { chapter: IChp, isRead: boolean , onDelete: ()=>void }) => {
     return (
-        <li className={`rounded-sm p-2 flex relative flex-none ${(props.isRead) ? "bg-base-300" : "bg-base-200"}`}
-            dir="rtl">
-            <div className="flex">
-                <div className="w-14 h-full ml-3">
-                    <img src={props.mangaImage || soloLeveling} className="w-full h-full object-cover" alt="MangaName"/>
+        <li className={` h-20 flex relative`}
+            dir="ltr">
+            <div className="flex h-full w-full">
+                <div className="w-14 h-20 flex-none ">
+                    <img src={chapter.manga.cover_url} className="w-full h-full object-cover rounded-lg  rounded-r-sm" alt="MangaName"/>
                 </div>
-                <div className="text-xs my-auto">
-                    <Link className="font-semibold text-lg hover:text-primary duration-300"
-                          to="/manga/1/1">{props.mangaName}</Link>
-                    <p>الفصل <span className="font-bold">{props.chapterNumber}</span> حصريا الان علي موقعنا</p>
+                <div className={`w-full rounded-lg ml-1 rounded-l-sm ${(isRead) ? "bg-black/20" : "bg-base-100"}`}>
+                  <div className="flex justify-between items-center">
+                      <Link className="text-xl capitalize font-bold p-3 pb-0 hover:text-primary duration-300"
+                            to={`/manga/${chapter.manga.slug}/${chapter.number}`}>{chapter.manga.title}</Link>
+
+                      <div className="btn btn-xs w-6 h-6 rounded-full p-0 mb-2" onClick={onDelete}>
+                          <RiCloseCircleFill/>
+                      </div>
+                  </div>
+
+                    <p className="text-sm text-right w-full px-2.5">
+                        <span className="font-bold text-primary"> الفصل </span>
+                        <span className="font-bold text-primary">{chapter.number} </span>
+                        حصريا الان علي موقعنا
+                    </p>
                 </div>
             </div>
-            <div className="flex-none absolute right-0 top-0">
-                <RiCloseCircleFill/>
-            </div>
+
         </li>
     )
 }

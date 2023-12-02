@@ -6,6 +6,7 @@ import React, {useEffect} from "react";
 import {IManga} from "../../../interfaces/manga.interface";
 import {getTopMangaViewsAPI} from "../../../services/search.service";
 import {AxiosResponse} from "axios";
+import AdsComponent from "../../../components/ads/ads.component";
 
 const MangaSliderV3 = () => {
     const [mangaList, setMangaList] = React.useState<IManga[]>([]);
@@ -16,19 +17,34 @@ const MangaSliderV3 = () => {
     }, []);
 
     return (
-        <div className="container mx-auto px-2 my-3">
+        <div className="container mx-auto px-2">
             <Swiper
                 slidesPerView={"auto"}
-                spaceBetween={30}
+                spaceBetween={20}
                 modules={[FreeMode]}
+                breakpoints={{
+                    // pc 3 , tablet 2 , mobile 1
+                    "640": {
+                        "slidesPerView": 1,
+                    },
+                    "768": {
+                        "slidesPerView": 2,
+                    },
+                    "1024": {
+                        "slidesPerView": 4,
+                    }
+                }}
                 className="h-full w-full">
-
-
                 {
                     mangaList.map((manga, index) => {
-                        return <SwiperSlide className="w-96 mb-8" key={index}>
-                            <MangaSlideCardV3 manga={manga}/>
-                        </SwiperSlide>
+                        return <div className="">
+                            {index % 2 === 0 && <SwiperSlide className="w-64 h-44">
+                                    <AdsComponent width="100%"  height={"100%"} size={"wide-sm"}/>
+                            </SwiperSlide>}
+                            <SwiperSlide className=" justify-center items-center flex w-64" key={index}>
+                                <MangaSlideCardV3 manga={manga}/>
+                            </SwiperSlide>
+                        </div>
                     })
                 }
             </Swiper>

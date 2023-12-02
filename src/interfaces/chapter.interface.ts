@@ -6,6 +6,7 @@ export interface IChapter {
     views: number;
     title: string;
     short_link: IShortLink;
+    content_text: string;
     images_urls: string[];
     created_at: string;
     by_user_id: number;
@@ -15,5 +16,6 @@ export interface IChapter {
 export interface ICreateChapter {
     number: number;
     title?: string;
-    zipFile : File;
+    content_text?: string;
+    zipFile? : File;
 }

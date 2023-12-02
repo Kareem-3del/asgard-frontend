@@ -1,0 +1,9 @@
+.search-card{
+  &:hover .front-card{
+    clip-path: circle(10% at -10% 100%);
+  }
+}
+.front-card{
+  background: black;
+  clip-path: circle(75%);
+}

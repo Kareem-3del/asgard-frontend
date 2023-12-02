@@ -1,0 +1,41 @@
+.quill {
+  @apply w-full h-full bg-base-300 text-base-content;
+  * {
+    @apply text-base-content;
+    font-family : Tajawal, sans-serif;
+  }
+}
+.ql-snow .ql-stroke{
+  stroke: hsl(var(--bc))
+}
+.ql-toolbar.ql-snow , .ql-editor.ql-blank , .ql-container.ql-snow{
+    @apply border-2 border-base-100;
+}
+.ql-editor * {
+  direction: rtl;
+  text-align: right;
+}
+
+.ql-editor.ql-blank , .ql-toolbar.ql-snow{
+    @apply rounded;
+
+}
+.ql-editor.ql-blank{
+    @apply border-none;
+}
+.ql-container.ql-snow{
+  border: none!important;
+    @apply border-t-2 m-1 rounded;
+}
+.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options{
+    @apply rounded bg-base-300 border-2 border-base-100 mt-1;
+}
+
+.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label{
+    border-color: var(-b1)!important;
+    @apply rounded bg-base-300 border-2 border-base-100;
+}
+.ql-toolbar.ql-snow .ql-picker-label{
+    border-color: var(-b1)!important;
+    @apply rounded bg-base-300 border-2 border-base-100;
+}

@@ -12,6 +12,8 @@ export interface IUser {
     "avatar_url": string
     "role_name": string,
     "coins": number,
+    discord_url: string,
+    instagram_url: string,
     allow_notifications: boolean,
     allow_messages: boolean,
     rates: IRate[],

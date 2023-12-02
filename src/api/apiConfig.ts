@@ -4,9 +4,9 @@ const apiConfig = {
     apiUrl: import.meta.env.VITE_API_URL,
     api2Url: import.meta.env.VITE_API_URL_,
 };
-let api = "http://147.182.205.76:3000"
-if(window.location.hostname === "localhost" || window.location.hostname === "192.168.1.3"){
-    api = "http://192.168.1.3:3000"
+let api = "http://192.168.1.18:3000"
+if(window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"){
+    api = "http://127.0.0.1:3000"
 }
 export let axiosConfig = {
     baseURL: api,

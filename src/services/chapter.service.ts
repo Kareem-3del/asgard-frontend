@@ -14,16 +14,21 @@ const createFormFromChapter = (chapter: ICreateChapter) => {
     const formData = new FormData();
     if(chapter.title) formData.append("title", chapter.title);
     formData.append("number", chapter.number.toString());
-    formData.append("zipFile", chapter.zipFile);
+    if(chapter.content_text) formData.append("content_text", chapter.content_text);
+    if(chapter.zipFile) formData.append("zipFile", chapter.zipFile);
     return formData;
 }
 
 export const createChapter = async (mangaSlug: string, chapter: ICreateChapter) => {
-    return await apiClient.post(`/manga/${mangaSlug}/chapter`, createFormFromChapter(chapter),{
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
-    });
+    if(chapter.zipFile) {
+        return await apiClient.post(`/manga/${mangaSlug}/chapter`, createFormFromChapter(chapter), {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+        });
+    } else {
+        return await apiClient.post(`/manga/${mangaSlug}/chapter_novel`, chapter);
+    }
 }
 
 export const getChapter = async (mangaSlug: string, chapterNumber: number) => {

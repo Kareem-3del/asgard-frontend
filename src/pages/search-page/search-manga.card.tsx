@@ -1,20 +1,17 @@
 import soloLeveling from "../../assets/images/solo-leveling_.png";
 import React from "react";
-import {FaBook, FaInfoCircle, MdLocationPin, RxBlendingMode} from "react-icons/all";
-import {IoReaderSharp} from "@react-icons/all-files/io5/IoReaderSharp";
+import {BiSortAZ, FaInfoCircle} from "react-icons/all";
 import {IManga} from "../../interfaces/manga.interface";
-import {VscDebugBreakpointData} from "@react-icons/all-files/vsc/VscDebugBreakpointData";
-import {getStatusColor, getTypeFlag} from "../../utils/manga-helper";
+import {getStatusColor} from "../../utils/manga-helper";
 import {Link} from "react-router-dom";
 import {Rating} from "../../components/rating/rating.component";
 import {TypeImage} from "../../components/type-image/type-image.component";
-
+import "./search-manga.card.scss";
 const SearchMangaCard = ({manga}: { manga: IManga }) => {
     return (
         <div key={"manga_search_card" + manga.id}
-             className="h-56 2xl:w-80 lg:w-96 bg-base-300 shadow-2xl  justify-center items-center rounded m-3 group overflow-hidden flex relative w-96">
-            <div
-                className="absolute z-10 w-full h-full justify-center items-center flex flex-col duration-500 left-0 group-hover:left-full">
+             className="h-56 md:w-96  shadow-2xl search-card  justify-center items-center rounded-xl m-3 group overflow-hidden flex relative w-96">
+            <div className="absolute z-10 w-full h-full justify-center items-center flex flex-col duration-500 left-0 front-card">
 
                 <h1 className="text-2xl line-clamp-2 2xl:text-2xl lg:text-3xl font-semibold text-center capitalize">
                     {manga.title}
@@ -32,45 +29,52 @@ const SearchMangaCard = ({manga}: { manga: IManga }) => {
 
             </div>
 
-            <div className="relative  w-full h-full  duration-500 right-full flex p-3  group-hover:right-0">
-                <div className="w-1/2 mr-2 h-full flex flex-col bg-black/40 rounded p-3">
-                    <Link to={`/manga/${manga.slug}`} className="text-xl font-extrabold line-clamp-2 text-primary">
-                        {manga.title}
-                    </Link>
-                    <div className="flex justify-center items-center mb-2.5 h-full overflow-hidden">
-                        <p className="text-center line-clamp-6 font-semibold text-xs" dir="rtl">
-                            {manga.story}
-                        </p>
-                    </div>
+            <div className="relative w-full h-full  duration-500  flex  right-0 back-card ">
+                <div className="w-2/3 flex bg-black/40 mr-1">
+                    <div className="h-full flex flex-col w-full rounded p-6 pr-3 pl-4">
+                        <Link to={`/manga/${manga.slug}`} className="text-xl font-extrabold line-clamp-2 text-primary">
+                            {manga.title}
+                        </Link>
+                        <div className="flex justify-center items-center w-full h-full overflow-hidden">
+                            <p className="text-center line-clamp-[7]  font-semibold text-xs" dir="rtl">
+                                {manga.story}
+                            </p>
+                        </div>
+                        <div className="flex space-x-2">
+                            <div className="btn-xs w-fit px-2 bg-white/10  rounded justify-center items-center flex font-semibold">
+                                <span className="text-[16px]">
+                                    <BiSortAZ/>
+                                </span>
+                            </div>
+                           <div className="btn-xs w-fit px-2 bg-white/10  rounded justify-center items-center flex font-semibold transition-colors duration-300 cursor-pointer">
+                               {manga.chapters.length}
+                               <span className="ml-1">فصل</span>
+                           </div>
 
-                    <div className="flex flex-col leading-3	 border-l-4 pl-2 border-primary text-xs">
-                        {manga.chapters.length}
-                        <span>فصل</span>
+                        </div>
                     </div>
-
-                </div>
-                <div
-                    className="flex-none w-8 mx-2 space-x-2 flex-row rotate-90 flex justify-center  h-full items-center ">
-                    <button className="btn btn-xs btn-primary w-24 h-8 text-[1rem] font-bold px-1 flex">
+                        <div className="flex-none w-1 mr-5 mx-2 space-x-2 flex-row rotate-90 flex justify-center  h-full items-center ">
+                            <button className="btn btn-xs btn-primary w-24 h-8 text-[1rem] font-bold px-1 flex">
                         <span>
                             <FaInfoCircle className="mr-2 -rotate-90"/>
                         </span>
-                        <span className="rotate-180">
+                                <span className="rotate-180">
                             نبــــــــــذة
                         </span>
-                    </button>
-                    <button className="w-8 h-8 btn btn-xs bg-base-200">
-                        <div className="w-3 h-3 rounded-full" style={{
-                            backgroundColor: getStatusColor(manga.status)
-                        }}></div>
-                    </button>
-                    <button className="btn h-8 w-8  btn-xs  p-0 overflow-hidden bg-transparenti">
-                        <TypeImage mangaType={manga.type} largeIcons={true} className="w-8 h-8"/>
-                    </button>
+                            </button>
+                            <button className="w-8 h-8 btn btn-xs bg-base-200">
+                                <div className="w-3 h-3 rounded-full" style={{
+                                    backgroundColor: getStatusColor(manga.status)
+                                }}></div>
+                            </button>
+                            <button className="btn h-8 w-8  btn-xs  p-0 overflow-hidden bg-transparenti">
+                                <TypeImage mangaType={manga.type} largeIcons={true} className="w-8 h-8"/>
+                            </button>
 
+                        </div>
                 </div>
 
-                <Link to={`/manga/${manga.slug}/`} className="w-1/2 rounded relative overflow-hidden h-full ">
+                <Link to={`/manga/${manga.slug}/`} className="w-1/2  relative overflow-hidden h-full ">
                     <img src={manga.cover_url || soloLeveling} className="w-full h-full object-cover" alt=""/>
 
                     <div className="w-full absolute bottom-3 flex justify-center center ">

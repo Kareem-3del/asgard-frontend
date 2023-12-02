@@ -3,6 +3,7 @@ import {FaCoins, FaDiscord, FaFacebook, FaTwitter} from "react-icons/fa";
 import {useAppSelector} from "../../hooks/redux";
 import soloLeveling from "../../assets/images/solo-leveling_.png";
 import {Link, NavLink} from "react-router-dom";
+import SearchBtnComponent from "../header/SearchBtn.component";
 
 export default function Footer() {
 
@@ -22,11 +23,12 @@ export default function Footer() {
     return (
         <>
             <div className="drawer-side">
+
                 <label htmlFor="sidebar" className="drawer-overlay"></label>
 
                 <div
                     className="menu p-4 w-80 bg-base-100 text-base-content flex flex-col h-full overflow-hidden flex-nowrap">
-                    <h1 className="text-2xl justify-center items-center flex w-full mt-3 w-full font-bold flex-col">
+                    <Link to="/" className="text-2xl justify-center items-center flex mt-3 w-full font-bold flex-col">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 408.56 221.72"
                              className="fill-base-content h-24">
                             <g id="Layer_2" data-name="Layer 2">
@@ -109,8 +111,11 @@ export default function Footer() {
                                 </g>
                             </g>
                         </svg>
-                        <hr className="w-full w-[193px] h-1 border-none bg-base-content rounded-full mt-4"/>
-                    </h1>
+                        <hr className="w-[193px] h-1 border-none bg-base-content rounded-full mt-4"/>
+                    </Link>
+                    <div className="w-full flex justify-center items-center mt-5">
+                        <SearchBtnComponent isFooterSearch={true}/>
+                    </div>
                     {user && <div className="bg-base-300 mb-auto   rounded-lg mt-10 flex items-center p-4">
                         <div className="avatar">
                             <div className="w-20 rounded-lg">
@@ -135,7 +140,7 @@ export default function Footer() {
                     </div>}
 
 
-                    {!user && <div className="h-full flex mb-auto w-full flex flex-col   space-y-3 mb-auto">
+                    {!user && <div className="h-full  w-full flex flex-col   space-y-3 mb-auto">
                         <Link to="/auth/login" className="btn rounded-lg  btn-primary mt-8">
                             تسجيل الدخول
                         </Link>
@@ -144,6 +149,9 @@ export default function Footer() {
                         </Link>
 
                     </div>}
+
+
+
 
 
                     <ul className="p-2 w-full   rounded-lg flex justify-center space-x-3 items-center text-3xl">

@@ -3,8 +3,8 @@ import React from "react";
 const MangaStoryComponent = ({story} : {story : string}) => {
 
     return (
-        <div className=" flex-none text-center text-xl p-5 h-fit bg-base-300 rounded min-h-[300px] justify-center items-center flex">
-            <p>
+        <div className="text-center text-xl p-5  bg-base-300 rounded-xl h-full  flex justify-center items-center">
+            <p className="line-clamp">
                 {story}
             </p>
         </div>
