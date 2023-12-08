@@ -47,7 +47,7 @@ const SearchPage = () => {
     const [exclude_genres, setExcludeGenres] = React.useState<number[]>([]);
     const [type, setType] = React.useState<MangaTypesEnum>(MangaTypesEnum.Manga);
     const [status, setStatus] = React.useState<StatusTypeEnum>(StatusTypeEnum.Ongoing);
-    const [page, setPage] = React.useState(0);
+    const [page,  setPage] = React.useState(0);
     const [showAdvancedSearch, setShowAdvancedSearch] = React.useState(false);
     const handleSearch = () => {
 

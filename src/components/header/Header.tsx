@@ -42,7 +42,7 @@ const themes = {
 }
 
 export default function Header() {
-    const [showHeader, setShowHeader] = useState(true);
+    const [showHeader, setShowHeader] = useState(false);
     const [offset, setOffset] = useState(0);
     const [isSideBarOpen, setIsSideBarOpen] = useState(false);
     const [isActive, setIsActive] = useState<"Novel" | "Manga" | "Home">("Home");
@@ -59,6 +59,7 @@ export default function Header() {
     }
 
     useEffect(() => {
+
         const onScroll = (e: any) => {
             const top = e.srcElement?.scrollTop
             if (e.srcElement) {

@@ -47,7 +47,7 @@ const SearchMangaCard = ({manga}: { manga: IManga }) => {
                                 </span>
                             </div>
                            <div className="btn-xs w-fit px-2 bg-white/10  rounded justify-center items-center flex font-semibold transition-colors duration-300 cursor-pointer">
-                               {manga.chapters.length}
+                               {manga.chapters?.length}
                                <span className="ml-1">فصل</span>
                            </div>
 
